@@ -13,7 +13,7 @@ runs:
         git config user.name "GitHub Actions" |
         git add . |
         git commit -m "automatic build" |
-        git push origin |
+        git push origin
 
 branding:
   icon: box
