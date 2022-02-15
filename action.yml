@@ -12,3 +12,6 @@ jobs:
       - run: git add .
       - run: git commit -m "automatic build"
       - run: git push origin
+branding:
+  icon: box
+  color: purple
