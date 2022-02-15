@@ -7,10 +7,18 @@ runs:
     - name: build smiley
       shell: bash
       run: bash smiley.sh
-    - name: Configure git email and user
+    - name: list
       shell: bash
-      run: git config user.email "actions@github.com" |
-        git config user.name "GitHub Actions"
+      run: ls
+    - name: cat
+      shell: bash
+      run: cat .git/config
+    - name: Configure git email
+      shell: bash
+      run: git config user.email "actions@github.com"
+    - name: Configure git user
+      shell: bash
+      run: git config user.name "GitHub Actions"
     - name: git add
       shell: bash
       run: git add .
