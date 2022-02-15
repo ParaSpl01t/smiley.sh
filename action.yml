@@ -6,14 +6,20 @@ runs:
   steps:
     - name: build smiley
       shell: bash
-      run: |
-        echo hi |
-        bash smiley.sh |
-        git config user.email "actions@github.com" |
-        git config user.name "GitHub Actions" |
-        git add . |
-        git commit -m "automatic build" |
-        git push origin
+      run: bash smiley.sh
+    - name: Configure git email and user
+      shell: bash
+      run: git config user.email "actions@github.com" |
+        git config user.name "GitHub Actions"
+    - name: git add
+      shell: bash
+      run: git add .
+    - name: git commit
+      shell: bash
+      run: git commit -m "automatic build"
+    - name: git push origin
+      shell: bash
+      run: git push origin
 
 branding:
   icon: box
