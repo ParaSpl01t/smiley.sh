@@ -4,7 +4,8 @@ description: A very fast SSG script for bloggers. Written in bash with GitHub Ac
 runs:
   using: 'composite'
   steps:
-    - uses: actions/checkout@v2
+    - name: build smiley
+    - shell: bash
     - run: bash smiley.sh
     - run: git config user.email "actions@github.com"
     - run: git config user.name "GitHub Actions"
