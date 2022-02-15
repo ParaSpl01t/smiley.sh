@@ -5,13 +5,13 @@ runs:
   using: 'composite'
   steps:
     - name: build smiley
-    - shell: bash
-    - run: bash smiley.sh
-    - run: git config user.email "actions@github.com"
-    - run: git config user.name "GitHub Actions"
-    - run: git add .
-    - run: git commit -m "automatic build"
-    - run: git push origin
+      shell: bash
+      run: bash smiley.sh
+      run: git config user.email "actions@github.com"
+      run: git config user.name "GitHub Actions"
+      run: git add .
+      run: git commit -m "automatic build"
+      run: git push origin
 
 branding:
   icon: box
