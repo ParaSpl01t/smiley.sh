@@ -4,27 +4,34 @@ description: A very fast SSG script for bloggers. Written in bash with GitHub Ac
 runs:
   using: 'composite'
   steps:
-    - name: build smiley
+    - name: Load smiley.sh
+      shell: bash
+      run: wget "https://raw.githubusercontent.com/ParaSpl01t/smiley.sh/v9/smiley.sh" -O smiley.sh
+
+    - name: Run smiley.sh
       shell: bash
       run: bash smiley.sh
-    - name: list
+
+    - name: Remove smiley.sh
       shell: bash
-      run: ls
-    - name: cat
-      shell: bash
-      run: cat .git/config
+      run: rm smiley.sh
+
     - name: Configure git email
       shell: bash
       run: git config user.email "actions@github.com"
+
     - name: Configure git user
       shell: bash
       run: git config user.name "GitHub Actions"
+
     - name: git add
       shell: bash
       run: git add .
+
     - name: git commit
       shell: bash
       run: git commit -m "automatic build"
+
     - name: git push origin
       shell: bash
       run: git push origin
