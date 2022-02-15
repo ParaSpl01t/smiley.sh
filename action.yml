@@ -1,17 +1,17 @@
 name: Smiley.sh
 description: A very fast SSG script for bloggers. Written in bash with GitHub Actions support.
-on: [push]
-jobs:
-  Build-Site:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: bash smiley.sh
-      - run: git config user.email "actions@github.com"
-      - run: git config user.name "GitHub Actions"
-      - run: git add .
-      - run: git commit -m "automatic build"
-      - run: git push origin
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v2
+    - run: bash smiley.sh
+    - run: git config user.email "actions@github.com"
+    - run: git config user.name "GitHub Actions"
+    - run: git add .
+    - run: git commit -m "automatic build"
+    - run: git push origin
+
 branding:
   icon: box
   color: purple
