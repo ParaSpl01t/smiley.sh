@@ -1,6 +1,6 @@
 # smiley.sh
 
-[Demo](https://smileyface.ga)
+[Demo](https://smileyface.ga) | [Local Install](#local-installation) | [Github Action Install](#github-actions)
 
 ## Overview
 
