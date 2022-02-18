@@ -29,7 +29,7 @@ cd smiley-empty-project
 ```
 
 ```sh
-curl https://raw.githubusercontent.com/ParaSpl01t/smiley.sh/main/smiley.sh
+curl -O https://raw.githubusercontent.com/ParaSpl01t/smiley.sh/main/smiley.sh
 ```
 
 #### Run the script
