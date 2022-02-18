@@ -1,5 +1,7 @@
 # smiley.sh
 
+[Demo](https://smileyface.ga)
+
 ## Overview
 
 smiley.sh is a very fast SSG script written in bash with GitHub Actions support.
