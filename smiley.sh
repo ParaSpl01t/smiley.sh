@@ -16,14 +16,10 @@ fi
 [ -d "docs" ] && find docs -mindepth 1 -delete || mkdir docs
 
 getprop () {
-	local title="2"
-	local desc="3"
-	local slug="4"
-	local author="5"
-	local created="6"
-	local updated="7"
-	local line=$(sed -n "${!2}p" < $1)
-	echo $line | sed "0,/$2:\ /s///"
+	local F=$(cat $1)
+	local Y=$(echo "$F" | sed -n '1,/---/p')
+	local L=$(echo "$Y" | sed -n "/^$2/p" )
+	echo $L | sed "0,/$2:\ /s///"
 }
 
 getpost () {
