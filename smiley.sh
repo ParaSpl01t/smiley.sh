@@ -1,18 +1,14 @@
 #!/bin/bash
 
 # Check and load config file
-# CONFIG=smiley.config
-# if [ -f "$CONFIG" ]; then
-#     . $CONFIG
-# else 
-#     echo "bruh moment"
-#     echo "The project is not a valid smiley project."
-# 	exit 1
-# fi
+CONFIG=smiley.config
+if [ -f "$CONFIG" ]; then
+    . $CONFIG
+fi
 
 # Preprations before building
 [ ! -d "tmp" ] && mkdir tmp
-# [ $backupGit = "true" ] && cp -r docs/.git* tmp/
+[ "$backupGit" = "true" ] && cp -r docs/.git* tmp/
 [ -d "docs" ] && find docs -mindepth 1 -delete || mkdir docs
 
 getprop () {
@@ -92,5 +88,5 @@ echo "$finalindex" > docs/index.html
 cp -r theme/root/* docs/
 
 # Cleanup and after-build tasks
-# [ $backupGit = "true" ] && cp -rT tmp/ docs/
-# find tmp -mindepth 1 -delete
+[ "$backupGit" = "true" ] && cp -rT tmp/ docs/
+find tmp -mindepth 1 -delete
