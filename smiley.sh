@@ -7,23 +7,23 @@ if [ -f "$CONFIG" ]; then
 fi
 
 # Preprations before building
-[ ! -d "tmp" ] && mkdir tmp
-[ "$backupGit" = "true" ] && cp -r docs/.git* tmp/
-[ -d "docs" ] && find docs -mindepth 1 -delete || mkdir docs
+[ ! -d "tmp" ] && mkdir tmp # make tmp directory (if not exist) for tmp shit
+[ "$backupGit" = "true" ] && cp -r docs/.git* tmp/  # copy docs/.git* to tmp if backupGit is true in config
+[ -d "docs" ] && find docs -mindepth 1 -delete || mkdir docs # Create/Empty docs directory
 
+# Get yaml value from key. ARGS- $1: file name, $2: yaml key name
 getprop () {
-	local F=$(cat $1)
-	local Y=$(echo "$F" | sed -n '1,/---/p')
-	local L=$(echo "$Y" | sed -n "/^$2/p" )
-	echo $L | sed "0,/$2:\ /s///"
+	local F=$(cat $1) # File contents
+	local Y=$(echo "$F" | sed -n '1,/---/p') # metadata section from file
+	local L=$(echo "$Y" | sed -n "/^$2/p" ) # Line with the required key:value pair
+	echo $L | sed "0,/$2:\ /s///" # echo line without the  "key:" part
 }
 
+# Get all the lines except yaml matadata from file. ARGS- $1: file name
 getpost () {
 	local line=$(sed -e '1,8d' < $1)
 	echo "$line"
 }
-
-POSTS=""
 
 # Loop goes Brrrrrr..
 for FILE in src/*;
@@ -36,8 +36,9 @@ do
 	created=$(getprop $FILE "created")
 	updated=$(getprop $FILE "updated")
 
-	post=$(getpost $FILE) # Post content
+	post=$(getpostn $FILE) # Post content
 	
+	# Load post template
 	posttemplate=$(cat theme/post.html)
 
 	# Start populating the template
@@ -50,6 +51,8 @@ do
 	echo "$finalpost" > docs/$slug/index.html
 	
 	# Append part of post metadata to $POSTS variable
+	# This makes a table with ";" delimeter and "\n" as line seperator
+	# $created is the first column so it will be used for sorting
 	POSTS="$POSTS$created;$title;$slug;$desc\n"
 done
 
@@ -88,5 +91,5 @@ echo "$finalindex" > docs/index.html
 cp -r theme/root/* docs/
 
 # Cleanup and after-build tasks
-[ "$backupGit" = "true" ] && cp -rT tmp/ docs/
-find tmp -mindepth 1 -delete
+[ "$backupGit" = "true" ] && cp -rT tmp/ docs/ # copy tmp/.git* to docs if backupGit is true in config
+find tmp -mindepth 1 -delete # empty tmp/ directory
