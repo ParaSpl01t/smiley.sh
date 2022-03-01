@@ -21,8 +21,10 @@ getprop () {
 
 # Get all the lines except yaml matadata from file. ARGS- $1: file name
 getpost () {
-	local line=$(sed -e '1,8d' < $1)
-	echo "$line"
+	local F=$(cat $1) # File contents
+	local Y=$(echo "$F" | sed -n '1,/---/p') # metadata section from file
+	local H=${F//$Y/} # replace $Y from $F with nothing so that only html content is left
+	echo "$H" # echo HTML contents
 }
 
 # Loop goes Brrrrrr..
@@ -36,7 +38,7 @@ do
 	created=$(getprop $FILE "created")
 	updated=$(getprop $FILE "updated")
 
-	post=$(getpostn $FILE) # Post content
+	post=$(getpost $FILE) # Post content
 	
 	# Load post template
 	posttemplate=$(cat theme/post.html)
