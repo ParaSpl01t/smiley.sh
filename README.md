@@ -74,7 +74,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-            - uses: ParaSpl01t/smiley.sh@v0.0.2
+            - uses: ParaSpl01t/smiley.sh@v0.0.4
 ```
 
 #### Make changes to src

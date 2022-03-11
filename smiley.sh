@@ -1,15 +1,18 @@
 #!/bin/bash
 
-# Check and load config file
-CONFIG=smiley.config
-if [ -f "$CONFIG" ]; then
-    . $CONFIG
-fi
+# Default config
+output=docs
+
+# Check and load config and override file
+CONFIG=smiley.config 
+OVERRIDE=override.config
+[ -f "$CONFIG" ] && . $CONFIG
+[ -f "$OVERRIDE" ] && . $OVERRIDE
 
 # Preprations before building
 [ ! -d "tmp" ] && mkdir tmp # make tmp directory (if not exist) for tmp shit
-[ "$backupGit" = "true" ] && cp -r docs/.git* tmp/  # copy docs/.git* to tmp if backupGit is true in config
-[ -d "docs" ] && find docs -mindepth 1 -delete || mkdir docs # Create/Empty docs directory
+[ "$backupGit" = "true" ] && cp -r $output/.git* tmp/  # copy docs/.git* to tmp if backupGit is true in config
+[ -d "$output" ] && find $output -mindepth 1 -delete || mkdir $output # Create/Empty docs directory
 
 # Get yaml value from key. ARGS- $1: file name, $2: yaml key name
 getprop () {
@@ -38,7 +41,7 @@ do
 	created=$(getprop $FILE "created")
 	updated=$(getprop $FILE "updated")
 
-	post=$(getpost $FILE) # Post content
+	post=$(getpost $FILE) # Post content without the YAML metadata
 	
 	# Load post template
 	posttemplate=$(cat theme/post.html)
@@ -49,8 +52,8 @@ do
 	finalpost=${finalpost//\:\(desc\)/$desc}
 
 	# Put the finalpost in correct file
-	mkdir docs/$slug
-	echo "$finalpost" > docs/$slug/index.html
+	mkdir $output/$slug
+	echo "$finalpost" > $output/$slug/index.html
 	
 	# Append part of post metadata to $POSTS variable
 	# This makes a table with ";" delimeter and "\n" as line seperator
@@ -87,11 +90,11 @@ done
 FINALCARDS=$(echo -e "$CARDS")
 indextemplate=$(cat theme/index.html)
 finalindex=${indextemplate//\:\(cards\)/$FINALCARDS}
-echo "$finalindex" > docs/index.html
+echo "$finalindex" > $output/index.html
 
 # copy static data to docs/ root
-cp -r theme/root/* docs/
+cp -r theme/root/* $output/
 
 # Cleanup and after-build tasks
-[ "$backupGit" = "true" ] && cp -rT tmp/ docs/ # copy tmp/.git* to docs if backupGit is true in config
+[ "$backupGit" = "true" ] && cp -rT tmp/ $output/ # copy tmp/.git* to docs if backupGit is true in config
 find tmp -mindepth 1 -delete # empty tmp/ directory

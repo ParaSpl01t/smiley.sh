@@ -6,7 +6,7 @@ runs:
   steps:
     - name: Load smiley.sh
       shell: bash
-      run: wget "https://raw.githubusercontent.com/ParaSpl01t/smiley.sh/v0.0.3/smiley.sh" -O smiley.sh
+      run: wget "https://raw.githubusercontent.com/ParaSpl01t/smiley.sh/v0.0.4/smiley.sh" -O smiley.sh
 
     - name: Run smiley.sh
       shell: bash
